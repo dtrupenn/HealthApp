@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
-
 $(function () {
   $(".closeit").click(function() {
     //$(".alert").hide(1000);
