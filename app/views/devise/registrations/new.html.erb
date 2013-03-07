@@ -1,18 +1,155 @@
-<h2>Sign up</h2>
+<!-- Navbar -->
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <%= link_to 'StatMeUp', '/', :class => 'brand' %>
+    </div> <!--/.container-fluid -->
+  </div> <!--/.navbar-inner -->
+</div> <!--/.navbar-fixed-top -->
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+<div class="container">
+  <br/>
+  <div class="page-header">
+    <h2>Sign up</h2>
+  </div>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => "form-horizontal"}) do |f| %>
+    <%= devise_error_messages! %>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+    <div class="control-group">
+      <%= f.label :'Name', :class => "control-label", :for => "nameInput" %>
+      <div class="controls">
+        <%= f.text_field :name, :class => "input-xlarge focused", :id => "nameInput" %>
+      </div>
+    </div>
+  
+    <div class="control-group">
+      <%= f.label :email, :class => "control-label", :for => "emailInput" %>
+      <div class="controls">
+        <%= f.email_field :email, :class => "input-xlarge focused", :id => "emailInput" %>
+      </div>
+    </div>
+  
+    <div class="control-group">
+      <%= f.label :password, :class => "control-label", :for => "pwordInput" %>
+      <div class="controls">
+        <%= f.password_field :password, :class => "input-xlarge focused", :id => "pwordInput" %>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label :password_confirmation, :class => "control-label", :for => "ppwordInput" %>
+      <div class="controls">
+        <%= f.password_field :password_confirmation, :class => "input-xlarge focused", :id => "ppwordInput" %>
+      </div>
+    </div>
+        
+    <div class="control-group">
+      <%= f.label :'Gender', :class => "control-label", :for => "genderInput" %>
+      <div class="controls">
+        <%= f.select :gender, {"Please Select" => nil, "Male" => true, "Female" => false}, :id =>"genderInput" %> 
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label :'Race', :class => "control-label", :for => "raceInput" %>
+      <div class="controls">
+        <%= f.select(:race, options_for_select([['Please Select', nil], ['Caucasian', 1], ['African American', 2], ['Asian/Pacific Islander', 3], ['Hispanic/Latino/a', 4], ['Mixed Race', 5], ['Other', 6]]), :class => "span3", :id =>"raceInput" )%>
+      </div>
+    </div>
+ 
+ 
+    <!-- Patient Field -->
+<!--    
+    <div class="control-group">
+      <%= f.label :'Age Diagnosed', :class => "control-label", :for => "dageInput" %>
+      <div class="controls">
+        <%= f.number_field :dage, :id => "dageInput" %>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <%= f.label :'Current Age', :class => "control-label", :for => "ageInput" %>
+      <div class="controls">
+        <%= f.number_field :age, :id => "ageInput" %>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <%= f.label :'Highest Education Level', :class => "control-label", :for => "eduInput" %>
+      <div class="controls">
+        <%= f.select(:education, options_for_select([['Please Select', nil], ['Grade School', 1], ['High School', 2], ['Some College', 3], ['College Degree (BA, BS)', 4], ['Graduate School (MD, PhD, JD)', 5], ['Not sure', 6]]), :class => "span3", :id =>"eduInput" )%>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label :'Relationship to patient', :class => "control-label", :for => "relInput" %>
+      <div class="controls">
+        <%= f.select(:relation, options_for_select([['Please Select', nil], ['Self', 1], ['Family Member/Friend', 2], ['Healthcare Provider', 3], ['Healthcare Provider with patient present', 4]]), :class => "span3", :id =>"relInput" )%>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label :'Location', :class => "control-label", :for => "locInput" %>
+      <div class="controls">
+        <%= f.select(:location, options_for_select([['Please Select', nil], ['Self', 1], ['Family Member/Friend', 2], ['Healthcare Provider', 3], ['Healthcare Provider with patient present', 4]]), :class => "span3", :id =>"locInput" )%>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label :'Type of living environment', :class => "control-label", :for => "envInput" %>
+      <div class="controls">
+        <%= f.select(:living, options_for_select([['Please Select', nil], ['Urban (City)', 1], ['Suburban (Near City)', 2], ['Rural (Country side)', 3]]), :class => "span3", :id =>"envInput" )%>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label :'Cancer Care Provider', :class => "control-label", :for => "proInput" %>
+      <div class="controls">
+        <%= f.select(:locCare, options_for_select([['Please Select', nil], ['University based cancer cneter', 1], ['Non-university based Hospital Cancer Center', 2], ['Private doctor\'s office', 3], ['Combination of those listed', 4]]), :class => "span3", :id =>"proInput" )%>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label :'Distance to Cancer Treatment Center', :class => "control-label", :for => "distInput" %>
+      <div class="controls">
+        <%= f.select(:locCareDist, options_for_select([['Please Select', nil], ['Less Than 20 miles (32 km)', 1], ['More Than 20 miles (32 km)', 2]]), :class => "span3", :id =>"distInput" )%>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <%= f.label :'Type of Cancer', :class => "control-label", :for => "cancerInput" %>
+      <div class="controls">
+        <%= f.select(:cancerType, options_for_select([['Please Select', nil], ['Grade School', 1], ['High School', 2], ['Some College', 3], ['College Degree (BA, BS)', 4], ['Graduate School (MD, PhD, JD)', 5], ['Not sure', 6]]), :class => "span3", :id =>"cancerInput" )%>
+      </div>
+    </div>
+-->
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+    <!-- Nurse Fields -->
 
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
+<!--
+    <div class="control-group">
+      <%= f.label :'Experience (years)', :class => "control-label", :for => "expInput" %>
+      <div class="controls">
+        <%= f.number_field :nurseExp, :id => "expInput" %>
+      </div>
+    </div>
 
-<%= render "devise/shared/links" %>
+    <div class="control-group">
+      <%= f.label :'Degree', :class => "control-label", :for => "degInput" %>
+      <div class="controls">
+        <%= f.select(:nurseDeg, options_for_select([['Please Select', nil], ['Registered Nurse', 1], ['Nurse Practitioner', 2], ['Clinical Nurse Specialist', 3]]), :class => "span3", :id =>"degInput" )%>
+      </div>
+    </div>
+-->
+
+    <div class="modal-footer">
+      <%= f.submit "Sign up", :class => 'btn btn-success' %>
+    </div>
+  <% end %>
+
+  <%= render "devise/shared/links" %>
+</div>
+
+    
+

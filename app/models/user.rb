@@ -22,4 +22,8 @@ class User < ActiveRecord::Base
   validates_length_of :name, maximum: 70, allow_blank: true
   
   has_and_belongs_to_many :roles
+  
+  def role?(role)
+    return !!self.roles.find_by_name(role.to_s.camelize)
+  end
 end

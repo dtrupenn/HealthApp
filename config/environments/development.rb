@@ -35,7 +35,7 @@ HealthApp::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
   
-  # Sets default url to localhost
+  # Sets default domain for action_mailer to localhost
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
  
 end

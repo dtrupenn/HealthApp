@@ -140,5 +140,5 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   sqlite3
   therubyracer
-  twitter-bootstrap-rails
+  twitter-bootstrap-rails (>= 2.1.2)
   uglifier (>= 1.0.3)
