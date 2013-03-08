@@ -14,15 +14,13 @@
   <div class="container">
     <% if alert %>
       <div class="alert alert-error">
-        <a class="closeit">x</a>
-        <!-- <button type="btn btn-danger" class="closeit">x</button> -->
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
         <%= alert %> 
       </div>
     <% end %>
     <% if notice %>
       <div class="alert alert-success">
-        <a class="closeit">x</a>
-        <!-- <button type="btn btn-success" class="closeit">x</button> -->
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
         <%= notice %>
       </div>
     <% end %>
