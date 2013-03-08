@@ -67,4 +67,18 @@ HealthApp::Application.configure do
   
   # Sets default domain for action_mailer to localhost
   config.action_mailer.default_url_options = { :host => 'newhealthapp.herokuapp.com' }
+#  config.action_mailer.delivery_method = :smtp
+# config.action_mailer.smtp_settings = {
+#    :address => "127.0.0.1",
+#    :port    => 25,
+#    :domain  => 'newhealthapp.herokuapp.com'
+#  }
+  ActionMailer::Base.smtp_settings = {
+    :address        => "smtp.sendgrid.net",
+    :port           => "25",
+    :authentication => :plain,
+    :user_name      => ENV['app12820026@heroku.com'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => ENV['newhealthapp']
+  }
 end
