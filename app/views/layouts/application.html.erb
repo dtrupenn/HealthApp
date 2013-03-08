@@ -13,17 +13,9 @@
 </head>
 <body>
   <div class="container">
-  <% if alert %>
-    <div class="alert alert-error">
-      <a class="closeit" href="#">x</a>
-      <!-- <button type="btn btn-danger" class="closeit">x</button> -->
-      <%= alert %> 
-    </div>
-  <% end %>
   <% if notice %>
     <div class="alert alert-success">
-      <a class="closeit" href="#">x</a>
-      <!-- <button type="btn btn-success" class="closeit">x</button> -->
+      <a class="closeit" onclick="closeit()">x</a>
       <%= notice %>
     </div>
   <% end %>
