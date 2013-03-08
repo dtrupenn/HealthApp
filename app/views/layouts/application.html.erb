@@ -2,25 +2,27 @@
 <html>
 <head>
   <title>HealthApp</title>
-  <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= csrf_meta_tags %>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+  <![endif]-->
+  <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
   <div class="container">
   <% if alert %>
     <div class="alert alert-error">
-      <a class="closeit">x</a>
+      <a class="closeit" href="#">x</a>
       <!-- <button type="btn btn-danger" class="closeit">x</button> -->
       <%= alert %> 
     </div>
   <% end %>
   <% if notice %>
     <div class="alert alert-success">
-      <a class="closeit">x</a>
+      <a class="closeit" href="#">x</a>
       <!-- <button type="btn btn-success" class="closeit">x</button> -->
       <%= notice %>
     </div>
