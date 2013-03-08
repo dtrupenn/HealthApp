@@ -5,6 +5,7 @@ gem 'devise' # Gem meant for authentication
 gem 'cancan' # Gem meant for user role definitions
 gem 'less-rails'
 gem 'therubyracer'
+gem 'jquery-rails'
 #gem 'twitter-bootstrap-rails', '>=2.1.2'
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 
