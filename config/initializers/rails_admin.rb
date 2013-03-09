@@ -7,7 +7,7 @@ RailsAdmin.config do |config|
   ################  Global configuration  ################
 
   config.authorize_with do |controller|
-    redirect_to main_app.root_path unless current_user.email == 'dtrupenn@gmail.com'
+    redirect_to main_app.root_path unless current_user.admin?
   end
 
   # Set the admin name here (optional second array element will appear in red). For example:
