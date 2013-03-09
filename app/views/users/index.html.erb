@@ -74,50 +74,57 @@
    </div>
 </div>
 
-<div class="container">
+
   <!-- <div class = "center">
     <input type="text" class="search-query span4" placeholder= "Search">
   </div> -->
-  <br />
-    <% @posts.each do |post| %>
-      <div class="well">
-        <div class="page-header">
-          <h1> <%= post.title %> </h1>
-          <h2><small>Author: <%= User.find(post.user_id).name %></small></h2>
-        </div>
-        <p class= "lead"><%= post.content %></p>
-        <footer class="footer"> <!-- Gotta make this better -->
-          <p> <%= post.created_at.strftime("%a %B #{post.created_at.day.ordinalize}, %I:%M %p ") %> </p>
-          <h2><small>Tags:  </small></h2>
-          <button class="btn btn-small btn-primary">#</button>
-        </footer>
+<br />
 
-        <div class="page-header">
-          <h1>Comments:</h1>
+<% @posts.each do |post| %>
+<div class="container">
+  <div class="well">
+    <div class="page-header">
+      <h1> <%= post.title %> </h1>
+      <h2><small>Author: <%= User.find(post.user_id).name %></small></h2>
+    </div>
+    <p class= "lead"><%= post.content %></p>
+
+    <small> <%= post.created_at.strftime("%a %B #{post.created_at.day.ordinalize}, %I:%M %p ") %> </small>
+    <h2><small>Tags:  </small></h2>
+    <% post.hash_t.each do |tag| %>
+      <button class="btn btn-small btn-primary"><%= tag.tag %></button>
+    <% end %>
+  </div>  
+
+  <div class="well">
+    <div class="page-header">
+      <h1>Comments:</h1>
+    </div>
+
+    <% post.comment.each do |comment| %>
+      <div class="well" id="comment">
+        <div class="container">
+          <p><%= comment.content %></p>
         </div>
-        
-          <% post.comment.each do |comment| %>
-            <div class="well" id="top">
-              <div class="container">
-                <p><%= comment.content %></p>
-              </div>
-              <br />
-              <hr />
-              <div><%= comment.created_at.strftime("%a %B #{post.created_at.day.ordinalize}, %I:%M %p ") %><h5> Author: <%= User.find(comment.user_id).name %></h5></div>
-            </div>
-          <% end %>
-          
-          <h5>Add your own comment</h5>
-          <%= form_for @comment, :html => { :class => 'form-horizontal' } do |f| %>
-            <fieldset>
-              <%= f.text_area :content, :class => 'input-xlarge', :columns => 12, :rows => 3, :id => "textarea", :placeholder => "Add new comment"%>
-            </fieldset>
-            <%= f.hidden_field :user_id, :value => current_user.id %>
-            <%= f.hidden_field :post_id, :value => post.id %>
-            <br />
-            <%= f.submit "Submit", :class => 'btn btn-info' %>
-          <% end %>
+        <br />
+        <hr />
+        <h5> Author: <%= User.find(comment.user_id).name %></h5>
+        <small><%= comment.created_at.strftime("%a %B #{post.created_at.day.ordinalize}, %I:%M %p ") %></small>
       </div>
     <% end %>
-    
+
+    <h5>Add your own comment</h5>
+    <%= form_for @comment, :html => { :class => 'form-horizontal' } do |f| %>
+      <fieldset>
+        <%= f.text_area :content, :class => 'input-xlarge', :columns => 12, :rows => 3, :id => "textarea", :placeholder => "Add new comment"%>
+      </fieldset>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+      <%= f.hidden_field :post_id, :value => post.id %>
+      <br />
+      <%= f.submit "Submit", :class => 'btn btn-info' %>
+    <% end %>
+  </div>
 </div>
+<hr>
+<% end %>
+    

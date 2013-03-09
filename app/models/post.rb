@@ -10,5 +10,6 @@ class Post < ActiveRecord::Base
   scope :latest, order('created_at desc').limit(1);
   
   has_many :comment
+  has_many :hash_t
   belongs_to :user
 end
