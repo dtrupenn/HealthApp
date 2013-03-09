@@ -1,7 +1,12 @@
 HealthApp::Application.routes.draw do
 
   devise_for :users, :controllers => { :registrations => "users/registrations" }
+  
   resources :users
+  
+  resources :posts
+  
+  resources :comments
 
   # Rails admin setup  
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
