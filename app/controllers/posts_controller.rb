@@ -33,4 +33,16 @@ class PostsController < ApplicationController
     end
   end
   
+  # DELETE /posts/1
+  # DELETE /posts/1.json
+  def destroy
+   @post = Post.find(params[:id])
+   @post.destroy
+
+   respond_to do |format|
+     format.html { redirect_to "/" }
+     format.json { head :no_content }
+   end
+ end
+  
 end

@@ -7,6 +7,8 @@ HealthApp::Application.routes.draw do
   resources :posts
   
   resources :comments
+  
+  resources :stats
 
   # Rails admin setup  
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'

@@ -94,11 +94,13 @@
     <div class="page-header">
       <h1> <%= post.title %> </h1>
       <h2><small>Author: <%= User.find(post.user_id).name %></small></h2>
+       <small> <%= post.created_at.strftime("%B #{post.created_at.day.ordinalize}, %I:%M %p ") %> </small>
     </div>
     <p class= "lead"><%= post.content %></p>
 
-    <small> <%= post.created_at.strftime("%a %B #{post.created_at.day.ordinalize}, %I:%M %p ") %> </small>
+    <% if false %>
     <h2><small>Tags:  </small></h2>
+    <% end %>
     <% post.hash_t.each do |tag| %>
       <button class="btn btn-small btn-primary"><%= tag.tag %></button>
     <% end %>
@@ -131,7 +133,7 @@
         <% end %>
       </div>
     <!--Delete Post-->
-      <a class="btn" href="#">Delete</a>
+      <%= link_to "Delete", post, :data => { :confirm => "Are you sure?" }, :method => :delete , :class => 'btn'%>
     <% end %>
   </div>  
 
@@ -148,7 +150,7 @@
         <br />
         <hr />
         <h5 class="tab"> Author: <%= User.find(comment.user_id).name %></h5>
-        <small class="tab"><%= comment.created_at.strftime("%a %B #{post.created_at.day.ordinalize}, %I:%M %p ") %></small>
+        <small class="tab"><%= comment.created_at.strftime("%B #{post.created_at.day.ordinalize}, %I:%M %p ") %></small>
         <% if current_user.id == comment.user_id%> <!-- User is allowed to delete or edit comments -->
         <!--Edit Comment-->
           <a class="btn" data-toggle="modal" href="#myModal3">Edit</a>
@@ -172,7 +174,8 @@
             <% end %>
           </div>
         <!--Delete Comment-->
-          <a class="btn" href="#">Delete</a>
+          <%= link_to "Delete", comment, :data => { :confirm => "Are you sure?" }, :method => :delete , :class => 'btn'%>
+         
         <% end %>
       </div>
     <% end %>
@@ -180,8 +183,8 @@
     <h5>Add your own comment</h5>
     <%= form_for @comment, :html => { :class => 'form-horizontal' } do |f| %>
       <fieldset>
-        <%= f.text_area :content, :class => 'input-xlarge', :columns => 120, :rows => 5, :id => "textarea", :placeholder => "Add new comment"%>
       </fieldset>
+        <%= f.text_area :content, :class => 'input-xlarge', :columns => 120, :rows => 5, :id => "textarea", :style => "margin: 0px; width: 425px; height: 100px;", :placeholder => "Add new comment"%>
       <%= f.hidden_field :user_id, :value => current_user.id %>
       <%= f.hidden_field :post_id, :value => post.id %>
       <br />
