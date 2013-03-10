@@ -13,9 +13,11 @@
         <ul class="nav">
           <li class="active"><a href="/">Forum</a></li>
           <li><a href="/stats">Stats</a></li>
-          <!--<form class="navbar-search" action="">
+          <% if false %> <!-- Need to make the search feature work -->
+          <form class="navbar-search" action="">
             <input type="text" class="search-query span2" placeholder="Search">
-          </form> -->
+          </form>
+          <% end %>
         </ul>
         <div class="nav pull-right">
           <li>
@@ -32,9 +34,11 @@
                   <a href="/admin">Admin</a>
               </li>
               <% end %>
-              <!--<li>
+              <% if false %> <!-- Need to make the help link first -->
+              <li>
                 <a href="/users/help">Help</a>
-              </li> -->
+              </li>
+              <% end %>
               <li>
                 <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
               </li>
@@ -98,29 +102,85 @@
     <% post.hash_t.each do |tag| %>
       <button class="btn btn-small btn-primary"><%= tag.tag %></button>
     <% end %>
+    <% if current_user.id == post.user_id%> <!-- User is allowed to delete or edit posts -->
+    <!--Edit Post-->
+      <a class="btn" data-toggle="modal" href="#myModal2">Edit</a>
+      <div class="modal hide fade" id="myModal2">
+        <div class="modal-header">
+          <a class="close" data-dismiss="modal">x</a>
+          <h3>Edit Post</h3>
+        </div>
+        <%= form_for post, :html => { :class => 'form-horizontal' } do |f| %>
+        <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :title, :class => 'control-label', :for => "title" %>
+              <div class="controls">
+                <%= f.text_field :title, :class => 'input-xlarge', :id => "title" %>
+              </div> 
+            </div>
+            <div class="control-group">
+              <%= f.label :content, :class => 'control-label', :for => "body" %>
+              <div class="controls">
+                <%= f.text_area :content, :class => 'input-xlarge', :rows => 6, :id => "body" %>
+              </div> 
+            </div>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit nil, :class => 'btn btn-primary' %>
+        </div>
+        <% end %>
+      </div>
+    <!--Delete Post-->
+      <a class="btn" href="#">Delete</a>
+    <% end %>
   </div>  
 
   <div class="well">
     <div class="page-header">
-      <h1>Comments:</h1>
+      <h2>Comments:</h2>
     </div>
 
     <% post.comment.each do |comment| %>
       <div class="well" id="comment">
         <div class="container">
-          <p><%= comment.content %></p>
+          <p class="tab"><%= comment.content %></p>
         </div>
         <br />
         <hr />
-        <h5> Author: <%= User.find(comment.user_id).name %></h5>
-        <small><%= comment.created_at.strftime("%a %B #{post.created_at.day.ordinalize}, %I:%M %p ") %></small>
+        <h5 class="tab"> Author: <%= User.find(comment.user_id).name %></h5>
+        <small class="tab"><%= comment.created_at.strftime("%a %B #{post.created_at.day.ordinalize}, %I:%M %p ") %></small>
+        <% if current_user.id == comment.user_id%> <!-- User is allowed to delete or edit comments -->
+        <!--Edit Comment-->
+          <a class="btn" data-toggle="modal" href="#myModal3">Edit</a>
+          <div class="modal hide fade" id="myModal3">
+            <div class="modal-header">
+              <a class="close" data-dismiss="modal">x</a>
+              <h3>Edit Comment</h3>
+            </div>
+            <%= form_for comment, :html => { :class => 'form-horizontal' } do |f| %>
+            <div class="modal-body">
+              <div class="control-group">
+                <%= f.label :content, :class => 'control-label', :for => "body" %>
+                <div class="controls">
+                  <%= f.text_area :content, :class => 'input-xlarge', :rows => 6, :id => "body" %>
+                </div> 
+              </div>
+            </div>
+            <div class="modal-footer">
+              <%= f.submit nil, :class => 'btn btn-primary' %>
+            </div>
+            <% end %>
+          </div>
+        <!--Delete Comment-->
+          <a class="btn" href="#">Delete</a>
+        <% end %>
       </div>
     <% end %>
 
     <h5>Add your own comment</h5>
     <%= form_for @comment, :html => { :class => 'form-horizontal' } do |f| %>
       <fieldset>
-        <%= f.text_area :content, :class => 'input-xlarge', :columns => 12, :rows => 3, :id => "textarea", :placeholder => "Add new comment"%>
+        <%= f.text_area :content, :class => 'input-xlarge', :columns => 120, :rows => 5, :id => "textarea", :placeholder => "Add new comment"%>
       </fieldset>
       <%= f.hidden_field :user_id, :value => current_user.id %>
       <%= f.hidden_field :post_id, :value => post.id %>
