@@ -27,7 +27,7 @@ class StatsController < ApplicationController
   # POST /stats
   # POST /stats.json
   def create
-    @stat = Stat.new(params[:user])
+    @stat = Stat.new(params[:stat])
 
     respond_to do |format|
       if @stat.save
@@ -43,7 +43,7 @@ class StatsController < ApplicationController
   # PUT /stats/1
   # PUT /stats/1.json
   def update
-    @stat = Stat.find(params[:id])
+    #@stat = Stat.find(params[:id])
 
     respond_to do |format|
       if @stat.update_attributes(params[:stat])
