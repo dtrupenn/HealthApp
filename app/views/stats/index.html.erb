@@ -52,3 +52,143 @@
 <div class="page-header">
   <h1>Stats</h1>
 </div>
+
+<div class="tabbable tabs-left">
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#bp" data-toggle="tab">Blood Pressure</a>
+    </li>
+    <li>
+      <a href="#wbc" data-toggle="tab">White Blood Cells</a>
+    </li>
+    <li>
+      <a href="#rbc" data-toggle="tab">Red Blood Cells</a>
+    </li>
+    <li>
+      <a href="#hemo" data-toggle="tab">Hemoglobin</a>
+    </li>
+    <li>
+      <a href="#hema" data-toggle="tab">Hematocrit</a>
+    </li>
+    <li>
+      <a href="#plate" data-toggle="tab">Platelete</a>
+    </li>
+    <li>
+      <a href="#hr" data-toggle="tab">Heart Rate</a>
+    </li>
+    <li>
+      <a href="#resp" data-toggle="tab">Respiration Rate</a>
+    </li>
+    <li>
+      <a href="#temp" data-toggle="tab">Temperature</a>
+    </li>
+    <li>
+      <a href="#o2sat" data-toggle="tab">O2 Saturation</a>
+    </li>
+    <li>
+      <a href="#pain" data-toggle="tab">Pain</a>
+    </li>
+    <li>
+      <a href="#weight" data-toggle="tab">Weight</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+      
+    <div class="tab-pane active" id="bp">
+      <div class="page-header">
+        <h2>Blood Pressure Stats</h2>
+      </div>
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal">Add Value</a>
+        <div class="modal hide fade" id="myModal">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add Data Value</h3>
+          </div>
+          <%= form_for @stat, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> mmHg
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 1 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit nil, :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div> <!-- Form Ends -->
+      </div>
+    </div>
+    
+    <div class="tab-pane" id="wbc">
+      <div class="page-header">
+        <h2>White Blood Cell Stats</h2>
+      </div>
+    </div>
+    
+    <div class="tab-pane" id="rbc">
+      <div class="page-header">
+        <h2>Red Blood Cell Stats</h2>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="hemo">
+      <div class="page-header">
+        <h2>Hemoglobin Stats</h2>
+      </div>
+    </div>
+    
+    <div class="tab-pane" id="hema">
+      <div class="page-header">
+        <h2>Hemoglobin Stats</h2>
+      </div>
+    </div>
+    
+    <div class="tab-pane" id="plate">
+      <div class="page-header">
+        <h2>Platelete Stats</h2>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="hr">
+      <div class="page-header">
+        <h2>Heart Rate Stats</h2>
+      </div>
+    </div>
+    
+    <div class="tab-pane" id="resp">
+      <div class="page-header">
+        <h2>Respiration Rate Stats</h2>
+      </div>
+    </div>
+    
+    <div class="tab-pane" id="temp">
+      <div class="page-header">
+        <h2>Temperature Stats</h2>
+      </div>
+    </div>
+    
+    <div class="tab-pane" id="o2sat">
+      <div class="page-header">
+        <h2>O2 Saturation Stats</h2>
+      </div>
+    </div>
+    
+    <div class="tab-pane" id="pain">
+      <div class="page-header">
+        <h2>Pain Stats</h2>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="weight">
+      <div class="page-header">
+        <h2>Weight Stats</h2>
+      </div>
+    </div>
+    
+  </div>
+</div>

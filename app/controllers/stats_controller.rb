@@ -4,10 +4,23 @@ class StatsController < ApplicationController
   # GET /stats
   # GET /stats.json
   def index
-
+    @stat = Stat.new
+    @stats = current_user.stats
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { head :no_content }
+    end
+  end
+
+  # GET /users/new
+  # GET /users/new.json
+  def new
+    @stat = Stat.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      #format.json { render json: @stat }
     end
   end
 

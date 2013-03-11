@@ -62,8 +62,8 @@ ActiveRecord::Schema.define(:version => 20130310212707) do
 
   create_table "stats", :force => true do |t|
     t.float    "value"
-    t.integer  "type"
-    t.integer  "uid"
+    t.integer  "stat_type"
+    t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
