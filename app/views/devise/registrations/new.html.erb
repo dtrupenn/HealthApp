@@ -47,7 +47,7 @@
     <div class="control-group">
       <%= f.label :'Gender', :class => "control-label", :for => "genderInput" %>
       <div class="controls">
-        <%= f.select :gender, {"Please Select" => nil, "Male" => true, "Female" => false}, :id =>"genderInput" %> 
+        <%= f.select(:gender, options_for_select([['Please Select', nil], ['Male', 1], ['Female', 2]]), :class => "span3", :id =>"genderInput" )%>
       </div>
     </div>
     

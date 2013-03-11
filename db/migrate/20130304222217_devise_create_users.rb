@@ -4,7 +4,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       
       #User potential attributes
       t.string  :name
-      t.boolean :gender
+      t.integer :gender
       t.integer :age
       t.integer :race
       t.integer :admin
