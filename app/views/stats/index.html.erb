@@ -1,3 +1,88 @@
+<script type="text/javascript">
+    
+  // Load the Visualization API and the controls package.
+  google.load('visualization', '1.0', {'packages':['controls']});
+    
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawBPDashboard);
+    
+    
+    
+  // Callback that creates and populates a data table,
+  // instantiates a dashboard, a range slider and a pie chart,
+  // passes in the data and draws it.
+  function drawBPDashboard() {
+
+    //Data setup
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', 'mmHg');
+    
+    
+    //Data input
+    data.addRow([new Date(2012, 0 ,1, 14, 13, 11), 5]);
+    data.addRow([new Date(2012, 0 ,2, 11, 21, 31), 7]);
+    data.addRow([new Date(2012, 0 ,3, 16, 3, 55), 3]);
+    data.addRow([new Date(2012, 0 ,4, 12, 23, 45), 2]);
+    data.addRow([new Date(2012, 0 ,5, 7, 44, 23), 6]);
+    data.addRow([new Date(2012, 0 ,6, 21, 33, 58), 1]);
+    data.addRow([new Date(2012, 0 ,7, 13, 14, 16), 8]);
+
+    //Create formatter and reformat data
+    var formatter_long = new google.visualization.DateFormat({pattern: 'MMM d, yyyy  hh:mm:ss a'});
+    formatter_long.format(data, 0);
+
+    // Create a dashboard.
+    var dashboard = new google.visualization.Dashboard(
+      document.getElementById('dashboard_div'));
+
+
+    var chart = new google.visualization.ChartWrapper({
+      'chartType': 'LineChart',
+      'containerId': 'chart',
+      'options': {
+        // Use the same chart area width as the control for axis alignment.
+        'title':'Blood Pressure Values (mmHg)',
+        'chartArea': {'height': '80%', 'width': '90%'},
+        'legend': {'position': 'none'}
+      },
+      // Convert the first column from 'date' to 'string'.
+      'view': {
+        'columns': [0, 1]
+      }
+    });
+
+    var control = new google.visualization.ControlWrapper({
+      'controlType': 'ChartRangeFilter',
+      'containerId': 'control',
+      'options': {
+        // Filter by the date axis.
+        'filterColumnIndex': 0,
+        'ui': {
+          'chartType': 'LineChart',
+          'chartOptions': {
+            'chartArea': {'height': '20%', 'width': '90%'},
+            'hAxis': {'baselineColor': 'none'}
+          },
+          // Display a single series that shows the closing value of the stock.
+          // Thus, this view has two columns: the date (axis) and the stock value (line series).
+          'chartView': {
+            'columns': [0, 1]
+          },
+          // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
+          'minRangeSize': 86400000
+        }
+      },
+      // Initial range: 2012-02-09 to 2012-03-20.
+      'state': {'range': {'start': new Date(2012, 0, 1), 'end': new Date(2012, 0, 7)}}
+    });
+
+    // Draw the dashboard.
+    dashboard.bind(control, chart);
+    dashboard.draw(data);
+  }
+</script> 
+
 <!-- Navbar -->
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
@@ -98,12 +183,16 @@
       <div class="page-header">
         <h2>Blood Pressure Stats</h2>
       </div>
+      
       <div class="span3">
+        <div class="page-header">
+          <h2>Add Data</h2>
+        </div>
         <a class="btn btn-info" data-toggle="modal" href="#myModal">Add Value</a>
         <div class="modal hide fade" id="myModal">
           <div class="modal-header">
             <a class="close" data-dismiss="modal">x</a>
-            <h3>Add Data Value</h3>
+            <h3>Add BP Value</h3>
           </div>
           <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
           <div class="modal-body">
@@ -120,74 +209,372 @@
             <%= f.submit "Add data", :class => 'btn btn-primary' %>
           </div>
           <% end %>
-        </div> <!-- Form Ends -->
+        </div>
       </div>
+
+      <div class="span14">
+        <div id="dashboard_div" style="height:600x;width:800px;">
+          <div id="chart"></div>
+          <div id="control"></div>
+        </div>
+      </div>
+      
     </div>
     
     <div class="tab-pane" id="wbc">
       <div class="page-header">
         <h2>White Blood Cell Stats</h2>
       </div>
+
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal1">Add Value</a>
+        <div class="modal hide fade" id="myModal1">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add WBC Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 2 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="span14">
+        <div id='pieChart_div'></div>
+      </div>
+
     </div>
     
     <div class="tab-pane" id="rbc">
       <div class="page-header">
         <h2>Red Blood Cell Stats</h2>
       </div>
+      
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal2">Add Value</a>
+        <div class="modal hide fade" id="myModal2">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add RBC Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 3 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      
     </div>
 
     <div class="tab-pane" id="hemo">
       <div class="page-header">
         <h2>Hemoglobin Stats</h2>
       </div>
+      
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal3">Add Value</a>
+        <div class="modal hide fade" id="myModal3">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add Hemoglobin Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 4 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      
     </div>
     
     <div class="tab-pane" id="hema">
       <div class="page-header">
-        <h2>Hemoglobin Stats</h2>
+        <h2>Hematocrit Stats</h2>
       </div>
+      
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal4">Add Value</a>
+        <div class="modal hide fade" id="myModal4">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add Hematocrit Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 5 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      
     </div>
     
     <div class="tab-pane" id="plate">
       <div class="page-header">
         <h2>Platelete Stats</h2>
       </div>
+      
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal5">Add Value</a>
+        <div class="modal hide fade" id="myModal5">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add Platelete Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 6 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      
     </div>
 
     <div class="tab-pane" id="hr">
       <div class="page-header">
         <h2>Heart Rate Stats</h2>
       </div>
+      
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal6">Add Value</a>
+        <div class="modal hide fade" id="myModal6">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add HR Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 7 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      
     </div>
     
     <div class="tab-pane" id="resp">
       <div class="page-header">
         <h2>Respiration Rate Stats</h2>
       </div>
+      
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal7">Add Value</a>
+        <div class="modal hide fade" id="myModal7">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add Respiration Rate Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 8 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      
     </div>
     
     <div class="tab-pane" id="temp">
       <div class="page-header">
         <h2>Temperature Stats</h2>
       </div>
+      
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal8">Add Value</a>
+        <div class="modal hide fade" id="myModal8">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add Temperature Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 9 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      
     </div>
     
     <div class="tab-pane" id="o2sat">
       <div class="page-header">
         <h2>O2 Saturation Stats</h2>
       </div>
+      
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal9">Add Value</a>
+        <div class="modal hide fade" id="myModal9">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add O2 Saturation Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 10 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      
     </div>
     
     <div class="tab-pane" id="pain">
       <div class="page-header">
         <h2>Pain Stats</h2>
       </div>
+      
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal10">Add Value</a>
+        <div class="modal hide fade" id="myModal10">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add Pain Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 11 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      
     </div>
 
     <div class="tab-pane" id="weight">
       <div class="page-header">
         <h2>Weight Stats</h2>
       </div>
+      
+      <div class="span3">
+        <a class="btn btn-info" data-toggle="modal" href="#myModal11">Add Value</a>
+        <div class="modal hide fade" id="myModal11">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add Weight Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 12 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      
     </div>
     
   </div>

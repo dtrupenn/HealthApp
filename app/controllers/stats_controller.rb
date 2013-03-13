@@ -15,14 +15,14 @@ class StatsController < ApplicationController
 
   # GET /users/new
   # GET /users/new.json
-  def new
-    @stat = Stat.new
+#  def new
+#    @stat = Stat.new
 
-    respond_to do |format|
-      format.html # new.html.erb
+#    respond_to do |format|
+#      format.html # new.html.erb
       #format.json { render json: @stat }
-    end
-  end
+#    end
+#  end
 
   # POST /stats
   # POST /stats.json
