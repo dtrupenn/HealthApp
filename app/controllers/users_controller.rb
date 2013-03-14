@@ -6,9 +6,9 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     if params[:tag]
-      @posts = Post.tagged_with(params[:tag]).paginate(:page => params[:page], :per_page => 15, :order => 'created_at DESC')
+      @posts = Post.search(params[:search]).tagged_with(params[:tag]).paginate(:page => params[:page], :per_page => 15, :order => 'created_at DESC')
     else
-      @posts = Post.paginate(:page => params[:page], :per_page => 15, :order => 'created_at DESC')
+      @posts = Post.search(params[:search]).paginate(:page => params[:page], :per_page => 15, :order => 'created_at DESC')
     end
    
     @post = Post.new
