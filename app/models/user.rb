@@ -32,4 +32,9 @@ class User < ActiveRecord::Base
   def admin?
     self.admin == 1
   end
+
+  def male?
+    self.gender == 1
+  end
+
 end

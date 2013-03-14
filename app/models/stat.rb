@@ -7,4 +7,53 @@ class Stat < ActiveRecord::Base
   validates :value, presence: true
   
   belongs_to :user
+
+  def bp?
+  	self.stat_type == 1
+  end
+
+  def wbc?
+  	self.stat_type == 2
+  end
+
+  def rbc?
+  	self.stat_type == 3
+  end
+
+  def hemo?
+  	self.stat_type == 4
+  end
+
+  def hema?
+  	self.stat_type == 5
+  end
+
+  def plat?
+  	self.stat_type == 6
+  end
+
+  def hr?
+  	self.stat_type == 7
+  end
+
+  def rr?
+  	self.stat_type == 8
+  end
+
+  def temp?
+  	self.stat_type == 9
+  end
+
+  def sat?
+  	self.stat_type == 10
+  end
+
+  def pain?
+  	self.stat_type == 11
+  end
+
+  def weight?
+  	self.stat_type == 12
+  end
+
 end
