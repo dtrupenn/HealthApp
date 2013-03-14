@@ -1,8 +1,6 @@
 class HashT < ActiveRecord::Base
   attr_accessible :post_id, :tag
 
-  validates :post_id, presence: true
-  validates :tag, presence: true
-
-  belongs_to :post
+  has_many :taggings
+  has_many :posts, through: :taggings
 end

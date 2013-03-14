@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130310212707) do
+ActiveRecord::Schema.define(:version => 20130314064711) do
 
   create_table "comments", :force => true do |t|
     t.text     "content"
@@ -67,6 +67,16 @@ ActiveRecord::Schema.define(:version => 20130310212707) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "taggings", :force => true do |t|
+    t.integer  "hash_t_id"
+    t.integer  "post_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "taggings", ["hash_t_id"], :name => "index_taggings_on_hash_t_id"
+  add_index "taggings", ["post_id"], :name => "index_taggings_on_post_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

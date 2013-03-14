@@ -75,6 +75,13 @@
                 <%= f.text_area :content, :class => 'input-xlarge', :rows => 6, :id => "body" %>
               </div> 
             </div>
+            <div class="control-group">
+              <%= f.label :tag_list, "Tags (separated by commas)", :class => 'control-label', :for => 'tags' %>
+              <div class="controls">
+                <%= f.text_field :tag_list, :class => 'input-xlarge', :id => 'tags'  %>
+              </div>
+            </div>
+
             <%= f.hidden_field :user_id, :value => current_user.id %>
         </div>
         <div class="modal-footer">
@@ -122,14 +129,7 @@
         <small> <%= post.created_at.strftime("%B #{post.created_at.day.ordinalize}, %I:%M %p ") %> </small>
         <br><br>
         <p class= "lead"><%= post.content %></p>
-
-        <% if false %>
-          <h2><small>Tags:  </small></h2>
-        <% end %>
-        <% post.hash_t.each do |tag| %>
-          <button class="btn btn-small btn-primary"><%= tag.tag %></button>
-        <% end %>
-
+        <p> Tags: <%= raw post.hash_ts.map(&:tag).map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
         <% if current_user.id == post.user_id%> <!-- User is allowed to delete or edit posts -->
           <div class="row-fluid">
             <!--Edit Post-->
@@ -156,6 +156,12 @@
                     </div> 
                   </div>
                 </div>
+                <div class="control-group">
+                  <%= f.label :tag_list, "Tags (separated by commas)", :class => 'control-label', :for => 'tags' %>
+                  <div class="controls">
+                    <%= f.text_field :tag_list, :class => 'input-xlarge', :id => 'tags'  %>
+                  </div>
+                 </div>
                 <div class="modal-footer">
                   <%= f.submit nil, :class => 'btn btn-primary' %>
                 </div>
@@ -239,6 +245,9 @@
       <hr>
       <% end %>
     </div> <!-- End span 6 -->
+  </div>
+  <div class="pagination">
+    <%= will_paginate @posts %>
   </div>
 </div>
 

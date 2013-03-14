@@ -5,9 +5,15 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
-    @posts = Post.all
+    if params[:tag]
+      @posts = Post.tagged_with(params[:tag]).paginate(:page => params[:page], :per_page => 15, :order => 'created_at DESC')
+    else
+      @posts = Post.paginate(:page => params[:page], :per_page => 15, :order => 'created_at DESC')
+    end
+   
     @post = Post.new
     @comment = Comment.new
+
     #@post = Post.search params[:search]
 
     respond_to do |format|

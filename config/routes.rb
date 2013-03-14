@@ -2,6 +2,8 @@ HealthApp::Application.routes.draw do
 
   devise_for :users, :controllers => { :registrations => "users/registrations" }
   
+  get 'tags/:tag', to: 'users#index', as: :tag
+
   resources :users
   
   resources :posts
