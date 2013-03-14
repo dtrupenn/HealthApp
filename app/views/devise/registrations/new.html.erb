@@ -58,6 +58,12 @@
       </div>
     </div>
  
+     <div class="control-group">
+      <%= f.label :'Current Age', :class => "control-label", :for => "ageInput" %>
+      <div class="controls">
+        <%= f.number_field :age, :id => "ageInput" %>
+      </div>
+    </div>
  
     <!-- Patient Field -->
 <!--    
@@ -65,13 +71,6 @@
       <%= f.label :'Age Diagnosed', :class => "control-label", :for => "dageInput" %>
       <div class="controls">
         <%= f.number_field :dage, :id => "dageInput" %>
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <%= f.label :'Current Age', :class => "control-label", :for => "ageInput" %>
-      <div class="controls">
-        <%= f.number_field :age, :id => "ageInput" %>
       </div>
     </div>
  

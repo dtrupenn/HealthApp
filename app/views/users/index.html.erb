@@ -171,16 +171,16 @@
 
 
         <div class="row">
-        <div class="span10 offset1">
-          <h2> <%= post.comment.all.count %> Comments:</h2>
-          <br>
+         <div class="span10 offset1">
+            <h2> <%= post.comment.all.count %> Comments:</h2>
+            <br>
 
-          <% post.comment.each do |comment| %>
-            <div class="container">
-              <p class="lead"><%= comment.content %></p>
-            </div>
-            <div class="row-fluid">
-              <div class="span6">
+           <% post.comment.each do |comment| %>
+              <div class="container">
+                <p class="lead"><%= comment.content %></p>
+              </div>
+              <div class="row-fluid">
+                <div class="span6">
                 <small><%= comment.created_at.strftime("%B #{post.created_at.day.ordinalize}, %I:%M %p ") %></small>
               </div>
               <div class="span6">
