@@ -5,24 +5,29 @@ class StatsController < ApplicationController
   # GET /stats.json
   def index
     @stat = Stat.new
-    @stats = current_user.stats
+    @stats = current_user.stats.order("stats.created_at asc") # Should get deleted soon
+
+    @bp = current_user.stats.where(:stat_type => 1).order("stats.created_at asc")
+    #@fBp = @bp.find(:first).created_at
+    #@lBp = @bp.find(:first, :order => "created_at desc").created_at
+
+    @wbc = current_user.stats.where(:stat_type => 2).order("stats.created_at asc")
+    #@fWbc = @wbc.find(:first).created_at
+    #@lWbc = @wbc.find(:first, :order => "created_at desc").created_at
+
+    @rbc = current_user.stats.where(:stat_type => 3).order("stats.created_at asc")
+    #@fRbc = @rbc.find(:first).created_at
+    #@lRbc = @rbc.find(:first, :order => "created_at desc").created_at
+
+    @hemo = current_user.stats.where(:stat_type => 4).order("stats.created_at asc")
+    #@fHemo = @hemo.find(:first).created_at
+    #@lHemo = @hemo.find(:first, :order => "created_at desc").created_at
     
     respond_to do |format|
       format.html # index.html.erb
       format.json { head :no_content }
     end
   end
-
-  # GET /users/new
-  # GET /users/new.json
-#  def new
-#    @stat = Stat.new
-
-#    respond_to do |format|
-#      format.html # new.html.erb
-      #format.json { render json: @stat }
-#    end
-#  end
 
   # POST /stats
   # POST /stats.json

@@ -28,11 +28,9 @@
     data.addRow([new Date(2012, 0 ,6, 21, 33, 58), 1]);
     data.addRow([new Date(2012, 0 ,7, 13, 14, 16), 8]);
 
-    <% @stats.each do |currStat| %>
-      <% if currStat.bp? %>
-        /*data.addRow([new Date(<%= currStat.created_at.strftime("%Y") %>, (<%= currStat.created_at.strftime("%m") %> - 1), <%= currStat.created_at.strftime("%e") %>, <%= currStat.created_at.strftime("%k") %>, <%= currStat.created_at.strftime("%M") %>, <%= currStat.created_at.strftime("%S") %>), <%= currStat.value.to_f %>]);*/
-      <% end %>
-    <% end %>
+    /*<% @bp.each do |currStat| %>
+      data.addRow([new Date(<%= currStat.created_at.strftime("%Y") %>, (<%= currStat.created_at.strftime("%m") %> - 1), <%= currStat.created_at.strftime("%e") %>, <%= currStat.created_at.strftime("%k") %>, <%= currStat.created_at.strftime("%M") %>, <%= currStat.created_at.strftime("%S") %>), <%= currStat.value.to_f %>]);
+    <% end %>*/
 
     //Create formatter and reformat data
     var formatter_long = new google.visualization.DateFormat({pattern: 'MMM d, yyyy  hh:mm:ss a'});
@@ -99,19 +97,17 @@
     data.addColumn('number', 'mmHg');
 
     //Data input
-    data.addRow([new Date(2012, 0 ,1, 14, 13, 11), 5]);
-    data.addRow([new Date(2012, 0 ,2, 11, 21, 31), 7]);
-    data.addRow([new Date(2012, 0 ,3, 16, 3, 55), 3]);
-    data.addRow([new Date(2012, 0 ,4, 12, 23, 45), 2]);
-    data.addRow([new Date(2012, 0 ,5, 7, 44, 23), 6]);
-    data.addRow([new Date(2012, 0 ,6, 21, 33, 58), 1]);
-    data.addRow([new Date(2012, 0 ,7, 13, 14, 16), 8]);
+    data.addRow([new Date(2013, 0 ,1, 14, 13, 11), 5]);
+    data.addRow([new Date(2013, 0 ,2, 11, 21, 31), 7]);
+    data.addRow([new Date(2013, 0 ,3, 16, 3, 55), 3]);
+    data.addRow([new Date(2013, 0 ,4, 12, 23, 45), 2]);
+    data.addRow([new Date(2013, 0 ,5, 7, 44, 23), 6]);
+    data.addRow([new Date(2013, 0 ,6, 21, 33, 58), 1]);
+    data.addRow([new Date(2013, 0 ,7, 13, 14, 16), 8]);
 
-    <% @stats.each do |currStat| %>
-      <% if currStat.wbc? %>
-        /*data.addRow([new Date(<%= currStat.created_at.strftime("%Y") %>, (<%= currStat.created_at.strftime("%m") %> - 1), <%= currStat.created_at.strftime("%e") %>, <%= currStat.created_at.strftime("%k") %>, <%= currStat.created_at.strftime("%M") %>, <%= currStat.created_at.strftime("%S") %>), <%= currStat.value.to_f %>]);*/
-      <% end %>
-    <% end %>
+    /*<% @wbc.each do |currStat| %>
+      data.addRow([new Date(<%= currStat.created_at.strftime("%Y") %>, (<%= currStat.created_at.strftime("%m") %> - 1), <%= currStat.created_at.strftime("%e") %>, <%= currStat.created_at.strftime("%k") %>, <%= currStat.created_at.strftime("%M") %>, <%= currStat.created_at.strftime("%S") %>), <%= currStat.value.to_f %>]);
+    <% end %>*/
 
     //Create formatter and reformat data
     var formatter_long = new google.visualization.DateFormat({pattern: 'MMM d, yyyy  hh:mm:ss a'});
@@ -158,6 +154,7 @@
         }
       },
       // Initial range: 2012-02-09 to 2012-03-20.
+
       'state': {'range': {'start': new Date(2012, 0, 1), 'end': new Date(2012, 0, 7)}}
     });
 
@@ -185,11 +182,9 @@
     data.addRow([new Date(2012, 0 ,6, 21, 33, 58), 1]);
     data.addRow([new Date(2012, 0 ,7, 13, 14, 16), 8]);
 
-    <% @stats.each do |currStat| %>
-      <% if currStat.rbc? %>
-        /*data.addRow([new Date(<%= currStat.created_at.strftime("%Y") %>, (<%= currStat.created_at.strftime("%m") %> - 1), <%= currStat.created_at.strftime("%e") %>, <%= currStat.created_at.strftime("%k") %>, <%= currStat.created_at.strftime("%M") %>, <%= currStat.created_at.strftime("%S") %>), <%= currStat.value.to_f %>]);*/
-      <% end %>
-    <% end %>
+    /*<% @rbc.each do |currStat| %>
+      data.addRow([new Date(<%= currStat.created_at.strftime("%Y") %>, (<%= currStat.created_at.strftime("%m") %> - 1), <%= currStat.created_at.strftime("%e") %>, <%= currStat.created_at.strftime("%k") %>, <%= currStat.created_at.strftime("%M") %>, <%= currStat.created_at.strftime("%S") %>), <%= currStat.value.to_f %>]);
+    <% end %>*/
 
     //Create formatter and reformat data
     var formatter_long = new google.visualization.DateFormat({pattern: 'MMM d, yyyy  hh:mm:ss a'});
@@ -256,7 +251,7 @@
         <span class="icon-bar"></span>
       </a>
       <a href="/users" class="brand">StatMeUp</a>
-      <div class="nav-collapse">
+      <div class="nav-collapse collapse">
         <ul class="nav">
           <li><a href="/">Forum</a></li>
           <li class="active"><a href="/stats">Stats</a></li>
@@ -289,6 +284,7 @@
               <li>
                 <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
               </li>
+            </ul>
           </li>
         </div>
       </div> <!-- /.navbar-collapse -->
@@ -300,7 +296,7 @@
   <h1>Stats</h1>
 </div>
 
-<div class="tabbable tabs-left">
+<div class="tabbable">
   <ul class="nav nav-tabs">
     <li class="active">
       <a href="#bp" data-toggle="tab">Blood Pressure</a>
@@ -380,6 +376,25 @@
           <div id="chart_bp"></div>
           <div id="control_bp"></div>
         </div>
+        <div class="offset1">
+          <h2>Most Recent</h2>
+          <table class="table table-stripped">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Value<th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @bp.most_recent.each do |bp| %>
+                <tr>
+                  <td><%= bp.created_at.strftime("%b %e, %Y @ %l:%M:%S %p") %></td>
+                  <td><%= bp.value%> mmHg</td>
+                </tr>
+             <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
       
     </div>
@@ -421,6 +436,25 @@
         <div id="dashboard_div_wbc" style="height:600x;width:800px;">
           <div id="chart_wbc"></div>
           <div id="control_wbc"></div>
+        </div>
+        <div class="offset1">
+          <h2>Most Recent</h2>
+          <table class="table table-stripped">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Value<th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @wbc.most_recent.each do |wbc| %>
+                <tr>
+                  <td><%= wbc.created_at.strftime("%b %e, %Y @ %l:%M:%S %p") %></td>
+                  <td><%= wbc.value%> (idk)</td>
+                </tr>
+             <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
 

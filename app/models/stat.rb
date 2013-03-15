@@ -8,6 +8,9 @@ class Stat < ActiveRecord::Base
   
   belongs_to :user
 
+  scope :most_recent, order("created_at desc").limit(10)
+
+
   def bp?
   	self.stat_type == 1
   end
