@@ -9,6 +9,7 @@ gem 'jquery-rails'
 gem 'rails_admin'
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'will_paginate', '~> 3.0'
+gem 'newrelic_rpm'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
