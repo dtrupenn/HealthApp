@@ -14,11 +14,6 @@
   // passes in the data and draws it.
   function drawBPDashboard() {
 
-    var first = new Date(<%= @bps.first.created_at.strftime("%Y") %>, 0, 1);
-    var last = new Date(<%= @bps.last.created_at.strftime("%Y") %>, (<%= @bps.last.created_at.strftime("%m") %> - 1), <%= @bps.last.created_at.strftime("%e") %>);
-
-
-
     //Data setup
     var data = new google.visualization.DataTable();
     data.addColumn('date', 'Date');
