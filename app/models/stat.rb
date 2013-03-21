@@ -8,7 +8,9 @@ class Stat < ActiveRecord::Base
   
   belongs_to :user
 
-  scope :most_recent, order("created_at desc").limit(10)
+  scope :most_recent, order("created_at DESC").limit(10)
+  scope :highest, order("stats.value DESC").limit(10)
+  scope :lowest, order("stats.value ASC").limit(10)
 
 
   def bp?

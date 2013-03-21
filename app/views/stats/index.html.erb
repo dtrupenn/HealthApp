@@ -20,13 +20,13 @@
     data.addColumn('number', 'mmHg');
 
     //Data input
-    data.addRow([new Date(2012, 0 ,1, 14, 13, 11), 5]);
-    data.addRow([new Date(2012, 0 ,2, 11, 21, 31), 7]);
-    data.addRow([new Date(2012, 0 ,3, 16, 3, 55), 3]);
-    data.addRow([new Date(2012, 0 ,4, 12, 23, 45), 2]);
-    data.addRow([new Date(2012, 0 ,5, 7, 44, 23), 6]);
-    data.addRow([new Date(2012, 0 ,6, 21, 33, 58), 1]);
-    data.addRow([new Date(2012, 0 ,7, 13, 14, 16), 8]);
+    data.addRow([new Date(2012, 0 ,1, 14, 13, 11), 120]);
+    data.addRow([new Date(2012, 0 ,2, 11, 21, 31), 138]);
+    data.addRow([new Date(2012, 0 ,3, 16, 3, 55), 118]);
+    data.addRow([new Date(2012, 0 ,4, 12, 23, 45), 143]);
+    data.addRow([new Date(2012, 0 ,5, 7, 44, 23), 124]);
+    data.addRow([new Date(2012, 0 ,6, 21, 33, 58), 133]);
+    data.addRow([new Date(2012, 0 ,7, 13, 14, 16), 126]);
 
     /*<% @bp.each do |currStat| %>
       data.addRow([new Date(<%= currStat.created_at.strftime("%Y") %>, (<%= currStat.created_at.strftime("%m") %> - 1), <%= currStat.created_at.strftime("%e") %>, <%= currStat.created_at.strftime("%k") %>, <%= currStat.created_at.strftime("%M") %>, <%= currStat.created_at.strftime("%S") %>), <%= currStat.value.to_f %>]);
@@ -45,7 +45,7 @@
       'containerId': 'chart_bp',
       'options': {
         // Use the same chart area width as the control for axis alignment.
-        'title':'Blood Pressure (mmHg)',
+        'title':'Systolic Blood Pressure (mmHg)',
         'chartArea': {'height': '80%', 'width': '90%'},
         'legend': {'position': 'none'}
       },
@@ -299,7 +299,7 @@
 <div class="tabbable">
   <ul class="nav nav-tabs">
     <li class="active">
-      <a href="#bp" data-toggle="tab">Blood Pressure</a>
+      <a href="#bp" data-toggle="tab">Systolic Blood Pressure</a>
     </li>
     <li>
       <!--<a href="#wbc" data-toggle="tab">White Blood Cells</a>-->
@@ -340,10 +340,12 @@
       
     <div class="tab-pane active" id="bp">
       <div class="page-header">
-        <h2>Blood Pressure Stats</h2>
+        <h2>Systolic Blood Pressure Stats</h2>
       </div>
       
-      <div class="span3">
+      <div class="row-fluid">
+
+      <div class="span2">
         <div class="page-header">
           <h2>Add Data</h2>
         </div>
@@ -369,14 +371,98 @@
           </div>
           <% end %>
         </div>
+
+
+
+        <div class="page-header">
+          <h2>Edit Data</h2>
+        </div>
+        <a class="btn btn-info" data-toggle="modal" href="#myModal">Edit Value</a>
+        <div class="modal hide fade" id="myModal">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add BP Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> mmHg
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 1 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
+
+
+
+        <div class="page-header">
+          <h2>Delete Data</h2>
+        </div>
+        <a class="btn btn-info" data-toggle="modal" href="#myModal">Delete</a>
+        <div class="modal hide fade" id="myModal">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">x</a>
+            <h3>Add BP Value</h3>
+          </div>
+          <%= form_for @stat, :url => { :action => "create" }, :html => { :class => 'form-horizontal' } do |f| %>
+          <div class="modal-body">
+            <div class="control-group">
+              <%= f.label :value, :class => 'control-label', :for => "val" %>
+              <div class="controls">
+                <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> mmHg
+              </div> 
+            </div>
+            <%= f.hidden_field :stat_type, :value => 1 %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Add data", :class => 'btn btn-primary' %>
+          </div>
+          <% end %>
+        </div>
       </div>
 
-      <div class="span14">
+      <div class="span7">
+        <br/><br/><br/>
         <div id="dashboard_div_bp" style="height:600x;width:800px;">
           <div id="chart_bp"></div>
           <div id="control_bp"></div>
         </div>
-        <div class="offset1">
+      </div>
+
+      <div class="span3">
+        <div class="alert alert-error alert-block">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4>Danger</h4>
+          You should something something something check <a href="#">link</a>
+        </div>
+
+        <div class="alert alert-info alert-block">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4>Tip</h4>
+          You should blah blah blah
+        </div>
+
+        <div class="alert alert-success alert-block">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4>Congrats!</h4>
+          You're stats look good, keep it up!
+        </div>
+      </div>
+
+      </div>
+
+
+
+      <div class="row-fluid">
+        <div class="span4">
           <h2>Most Recent</h2>
           <table class="table table-stripped">
             <thead>
@@ -386,7 +472,47 @@
               </tr>
             </thead>
             <tbody>
-              <% @bp.most_recent.each do |bp| %>
+              <% @bps.most_recent.each do |bp| %>
+                <tr>
+                  <td><%= bp.created_at.strftime("%b %e, %Y @ %l:%M:%S %p") %></td>
+                  <td><%= bp.value%> mmHg</td>
+                </tr>
+             <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="span4">
+          <h2>Highest Values</h2>
+          <table class="table table-stripped">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Value<th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @bps.highest.each do |bp| %>
+                <tr>
+                  <td><%= bp.created_at.strftime("%b %e, %Y @ %l:%M:%S %p") %></td>
+                  <td><%= bp.value%> mmHg</td>
+                </tr>
+             <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="span4">
+          <h2>Lowest Values</h2>
+          <table class="table table-stripped">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Value<th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @bps.lowest.each do |bp| %>
                 <tr>
                   <td><%= bp.created_at.strftime("%b %e, %Y @ %l:%M:%S %p") %></td>
                   <td><%= bp.value%> mmHg</td>
@@ -396,8 +522,9 @@
           </table>
         </div>
       </div>
-      
     </div>
+      
+    
     
     <div class="tab-pane" id="wbc">
       <div class="page-header">

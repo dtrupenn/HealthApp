@@ -98,7 +98,8 @@
 <br />
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span2">
+
+    <div class="span3">
       <div class="well">
         <div class="page-header">
           <h2>Profile</h2>
@@ -117,6 +118,13 @@
         <p class="lead"><%= current_user.age %></p>
       </div>
     </div>
+   <!--<div class="span3">
+      <h4>Health Links</h4>
+      <ul class="nav nav-list">
+        <li><a href="#"><i class="icon-chevron-right"></i>test1</a></li>
+        <li><a href="#"><i class="icon-chevron-right"></i>test2</a></li>
+      </ul>
+    </div>-->
 
     <div class="span6 offset1">
       <% @posts.each do |post| %>
@@ -169,7 +177,6 @@
                 </div>
               <% end %>
             </div>
-
             <!--Delete Post-->
             <div class="span1">
               <%= link_to "Delete", post, :data => { :confirm => "Are you sure?" }, :method => :delete%>
@@ -233,7 +240,7 @@
           <%= form_for @comment, :html => { :class => 'form-horizontal' } do |f| %>
             <fieldset>
             </fieldset>
-            <%= f.text_area :content, :class => 'input-xlarge', :columns => 120, :rows => 5, :id => "textarea", :style => "margin: 0px; width: 425px; height: 100px;", :placeholder => "Add new comment"%>
+            <%= f.text_area :content, :class => 'input-xlarge', :columns => 120, :rows => 5, :id => "textarea", :style => "margin: 0px; width: 400px; height: 100px;", :placeholder => "Add new comment"%>
             <%= f.hidden_field :user_id, :value => current_user.id %>
             <%= f.hidden_field :post_id, :value => post.id %>
             <br />

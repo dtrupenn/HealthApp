@@ -7,21 +7,41 @@ class StatsController < ApplicationController
     @stat = Stat.new
     @stats = current_user.stats.order("stats.created_at asc") # Should get deleted soon
 
-    @bp = current_user.stats.where(:stat_type => 1).order("stats.created_at asc")
-    #@fBp = @bp.find(:first).created_at
-    #@lBp = @bp.find(:first, :order => "created_at desc").created_at
+    @bps = current_user.stats.where(:stat_type => 1)
+    @bp = @bps.order("stats.created_at asc")
 
-    @wbc = current_user.stats.where(:stat_type => 2).order("stats.created_at asc")
-    #@fWbc = @wbc.find(:first).created_at
-    #@lWbc = @wbc.find(:first, :order => "created_at desc").created_at
+    @wbcs = current_user.stats.where(:stat_type => 2)
+    @wbc = @wbcs.order("stats.created_at asc")
 
-    @rbc = current_user.stats.where(:stat_type => 3).order("stats.created_at asc")
-    #@fRbc = @rbc.find(:first).created_at
-    #@lRbc = @rbc.find(:first, :order => "created_at desc").created_at
+    @rbcs = current_user.stats.where(:stat_type => 3)
+    @rbc = @rbcs.order("stats.created_at asc")
 
-    @hemo = current_user.stats.where(:stat_type => 4).order("stats.created_at asc")
-    #@fHemo = @hemo.find(:first).created_at
-    #@lHemo = @hemo.find(:first, :order => "created_at desc").created_at
+    @hemos = current_user.stats.where(:stat_type => 4)
+    @hemo = @hemos.order("stats.created_at asc")
+
+    @hemas = current_user.stats.where(:stat_type => 5)
+    @hema = @hemas.order("stats.created_at asc")
+
+    @plats = current_user.stats.where(:stat_type => 6)
+    @plat = @plats.order("stats.created_at asc")
+
+    @hrs = current_user.stats.where(:stat_type => 7)
+    @hr = @hrs.order("stats.created_at asc")
+
+    @rrs = current_user.stats.where(:stat_type => 8)
+    @rr = @rrs.order("stats.created_at asc")
+
+    @temps = current_user.stats.where(:stat_type => 9)
+    @temp = @temps.order("stats.created_at asc")
+
+    @sats = current_user.stats.where(:stat_type => 10)
+    @sat = @sats.order("stats.created_at asc")
+
+    @pains = current_user.stats.where(:stat_type => 11)
+    @pain = @pains.order("stats.created_at asc")
+
+    @weights = current_user.stats.where(:stat_type => 12)
+    @weight = @weights.order("stats.created_at asc")
     
     respond_to do |format|
       format.html # index.html.erb
