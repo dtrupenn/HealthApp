@@ -64,9 +64,9 @@ HealthApp::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-  
+
   # Sets default domain for action_mailer to localhost
-  config.action_mailer.default_url_options = { :host => 'newhealthapp.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'statmeup.herokuapp.com' }
 #  config.action_mailer.delivery_method = :smtp
 # config.action_mailer.smtp_settings = {
 #    :address => "127.0.0.1",
@@ -82,5 +82,5 @@ HealthApp::Application.configure do
     :domain         => ENV['heroku.com']
   }
   ActionMailer::Base.delivery_method ||= :smtp
-  
+
 end
