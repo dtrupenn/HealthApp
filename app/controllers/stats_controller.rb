@@ -42,7 +42,7 @@ class StatsController < ApplicationController
 
     @weights = current_user.stats.where(:stat_type => 12)
     @weight = @weights.order("stats.created_at asc")
-    
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { head :no_content }
@@ -92,5 +92,5 @@ class StatsController < ApplicationController
      format.json { head :no_content }
    end
  end
- 
+
 end
