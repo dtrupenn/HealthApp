@@ -2,6 +2,7 @@
 
 The purpose of this application is a proof of concept health tracking webapp that provides a unique perspective for both nurses and patients.
 
+This project is a Rails web application that has been built to be hosted on Heroku with the addition of heroku/sendgrid add ons.
 
 == Description of Contents
 
