@@ -61,5 +61,6 @@ module HealthApp
 
     # Recommended for devise to work with heroku
     config.assets.initialize_on_precompile = false
+    config.action_controller.allow_forgery_protection = false
   end
 end

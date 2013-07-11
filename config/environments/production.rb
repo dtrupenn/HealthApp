@@ -66,7 +66,7 @@ HealthApp::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Sets default domain for action_mailer to localhost
-  config.action_mailer.default_url_options = { :host => 'statmeup.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'statitup.herokuapp.com' }
 #  config.action_mailer.delivery_method = :smtp
 # config.action_mailer.smtp_settings = {
 #    :address => "127.0.0.1",
