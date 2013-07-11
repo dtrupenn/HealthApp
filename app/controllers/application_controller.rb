@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  # protect_from_forgery
   
   # Handle CanCan::AccessDenied Exception
   rescue_from CanCan::AccessDenied do |exception|
