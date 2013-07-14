@@ -1,14 +1,14 @@
 <script type="text/javascript">
-
+    
   // Load the Visualization API and the controls package.
   google.load('visualization', '1.0', {'packages':['controls']});
-
+    
   // Set a callback to run when the Google Visualization API is loaded.
   google.setOnLoadCallback(drawBPDashboard);
   //google.setOnLoadCallback(drawWbcDashboard);
-
-
-
+    
+    
+    
   // Callback that creates and populates a data table,
   // instantiates a dashboard, a range slider and a pie chart,
   // passes in the data and draws it.
@@ -20,6 +20,14 @@
     data.addColumn('number', 'mmHg');
 
     //Data input
+    /*data.addRow([new Date(2012, 0 ,1, 14, 13, 11), 120]);
+    data.addRow([new Date(2012, 0 ,2, 11, 21, 31), 138]);
+    data.addRow([new Date(2012, 0 ,3, 16, 3, 55), 118]);
+    data.addRow([new Date(2012, 0 ,4, 12, 23, 45), 143]);
+    data.addRow([new Date(2012, 0 ,5, 7, 44, 23), 124]);
+    data.addRow([new Date(2012, 0 ,6, 21, 33, 58), 133]);
+    data.addRow([new Date(2012, 0 ,7, 13, 14, 16), 126]);*/
+
     <% @bp.each do |currStat| %>
       data.addRow([new Date(<%= currStat.created_at.strftime("%Y") %>, (<%= currStat.created_at.strftime("%m") %> - 1), <%= currStat.created_at.strftime("%e") %>, <%= currStat.created_at.strftime("%k") %>, <%= currStat.created_at.strftime("%M") %>, <%= currStat.created_at.strftime("%S") %>), <%= currStat.value.to_f %>]);
     <% end %>
@@ -61,7 +69,7 @@
         'ui': {
           'chartType': 'LineChart',
           'chartOptions': {
-            'chartArea': {'height': '30%', 'width': '90%'},
+            'chartArea': {'height': '40%', 'width': '90%'},
             'hAxis': {'baselineColor': 'none'}
           },
           // Display a single series that shows the closing value of the stock.
@@ -74,10 +82,7 @@
         }
       },
       // Initial range: 2012-02-09 to 2012-03-20.
-      //'state': {'range': {'start': new Date(2013, 0, 1), 'end': new Date(2013, 4, 2)}}
-      'state': {'range': {
-        'start': new Date(<%= @bp.first.created_at.strftime("%Y") %>, (<%= @bp.first.created_at.strftime("%m") %> - 1), <%= @bp.first.created_at.strftime("%e") %>, <%= @bp.first.created_at.strftime("%k") %>, <%= @bp.first.created_at.strftime("%M") %>, <%= @bp.first.created_at.strftime("%S") %>),
-        'end': new Date(<%= @bp.last.created_at.strftime("%Y") %>, (<%= @bp.last.created_at.strftime("%m") %> - 1), <%= @bp.last.created_at.strftime("%e") %>, <%= @bp.last.created_at.strftime("%k") %>, <%= @bp.last.created_at.strftime("%M") %>, <%= @bp.last.created_at.strftime("%S") %>)}}
+      'state': {'range': {'start': new Date(2013, 0, 1), 'end': new Date(2013, 4, 2)}}
       //'state': {'range': {'start': first, 'end': last}}
     });
 
@@ -105,7 +110,6 @@
     data.addRow([new Date(2013, 0 ,5, 7, 44, 23), 6]);
     data.addRow([new Date(2013, 0 ,6, 21, 33, 58), 1]);
     data.addRow([new Date(2013, 0 ,7, 13, 14, 16), 8]);
-    // Date Format: new Date(year, month, day, hours, minutes, seconds, milliseconds)
 
     /*<% @wbc.each do |currStat| %>
       data.addRow([new Date(<%= currStat.created_at.strftime("%Y") %>, (<%= currStat.created_at.strftime("%m") %> - 1), <%= currStat.created_at.strftime("%e") %>, <%= currStat.created_at.strftime("%k") %>, <%= currStat.created_at.strftime("%M") %>, <%= currStat.created_at.strftime("%S") %>), <%= currStat.value.to_f %>]);
@@ -239,7 +243,7 @@
     dashboard.bind(control, chart);
     dashboard.draw(data);
   }
-</script>
+</script> 
 
 <!-- Navbar -->
 <div class="navbar navbar-fixed-top">
@@ -334,12 +338,12 @@
     </li>
   </ul>
   <div class="tab-content">
-
+      
     <div class="tab-pane active" id="bp">
       <div class="page-header">
         <h2>Systolic Blood Pressure Stats</h2>
       </div>
-
+      
       <div class="row-fluid">
 
         <div class="span2">
@@ -358,7 +362,7 @@
                 <%= f.label :value, :class => 'control-label', :for => "val" %>
                 <div class="controls">
                   <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> mmHg
-                </div>
+                </div> 
               </div>
               <%= f.hidden_field :stat_type, :value => 1 %>
               <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -386,7 +390,7 @@
                 <%= f.label :value, :class => 'control-label', :for => "val" %>
                 <div class="controls">
                   <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> mmHg
-                </div>
+                </div> 
               </div>
               <%= f.hidden_field :stat_type, :value => 1 %>
               <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -414,7 +418,7 @@
                 <%= f.label :value, :class => 'control-label', :for => "val" %>
                 <div class="controls">
                   <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> mmHg
-                </div>
+                </div> 
               </div>
               <%= f.hidden_field :stat_type, :value => 1 %>
               <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -435,39 +439,25 @@
         </div>
 
         <div class="span3">
-          <% if @bp.last.value.to_f > 140 %>
-            <div class="alert alert-error alert-block">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <h4>Danger</h4>
-              <% if @bp.last.value.to_f < 160 %>
-                Your last stat show signs of Stage 1 High Blood Pressure, <a href="http://www.mayoclinic.com/health/high-blood-pressure/HI00027">here</a> are some tips to keep it down.
-              <% else %>
-                <% if @bp.last.value.to_f < 180 %>
-                  Your last stat show signs of Stage 2 High Blood Pressure, <a href="http://www.mayoclinic.com/health/high-blood-pressure/HI00027">here</a> are some tips to keep it down.
-                <% else %>
-                  Your last stat show signs of Hypertensive Crisis, find more information <a href="http://www.heart.org/HEARTORG/Conditions/HighBloodPressure/AboutHighBloodPressure/Hypertensive-Crisis_UCM_301782_Article.jsp">here</a>.
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
+          <div class="alert alert-error alert-block">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4>Danger</h4>
+            You should something something something check <a href="#">link</a>
+          </div>
 
-
-          <!-- Not Currently Needed -->
-          <!-- <div class="alert alert-info alert-block">
+          <div class="alert alert-info alert-block">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <h4>Tip</h4>
             You should blah blah blah
-          </div>-->
+          </div>
 
-          <% if @bp.last.value.to_f < 120 %>
-            <div class="alert alert-success alert-block">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <h4>Congrats!</h4>
-              You're stats look good, keep it up!
-            </div>
-          <% end %>
+          <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4>Congrats!</h4>
+            You're stats look good, keep it up!
+          </div>
         </div>
-
+      
       </div>
 
 
@@ -534,9 +524,9 @@
         </div>
       </div>
     </div>
-
-
-
+      
+    
+    
     <div class="tab-pane" id="wbc">
       <div class="page-header">
         <h2>White Blood Cell Stats</h2>
@@ -560,7 +550,7 @@
                 <%= f.label :value, :class => 'control-label', :for => "val" %>
                 <div class="controls">
                   <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> billion cells/L
-                </div>
+                </div> 
               </div>
               <%= f.hidden_field :stat_type, :value => 2 %>
               <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -588,7 +578,7 @@
                 <%= f.label :value, :class => 'control-label', :for => "val" %>
                 <div class="controls">
                   <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> billion cells/L
-                </div>
+                </div> 
               </div>
               <%= f.hidden_field :stat_type, :value => 2 %>
               <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -616,7 +606,7 @@
                 <%= f.label :value, :class => 'control-label', :for => "val" %>
                 <div class="controls">
                   <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> billion cells/L
-                </div>
+                </div> 
               </div>
               <%= f.hidden_field :stat_type, :value => 2 %>
               <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -655,7 +645,7 @@
             You're stats look good, keep it up!
           </div>
         </div>
-
+      
       </div>
 
 
@@ -723,12 +713,12 @@
       </div>
 
     </div>
-
+    
     <div class="tab-pane" id="rbc">
       <div class="page-header">
         <h2>Red Blood Cell Stats</h2>
       </div>
-
+      
       <div class="span3">
         <div class="page-header">
           <h2>Add Data</h2>
@@ -745,7 +735,7 @@
               <%= f.label :value, :class => 'control-label', :for => "val" %>
               <div class="controls">
                 <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
-              </div>
+              </div> 
             </div>
             <%= f.hidden_field :stat_type, :value => 3 %>
             <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -770,7 +760,7 @@
       <div class="page-header">
         <h2>Hemoglobin Stats</h2>
       </div>
-
+      
       <div class="span3">
         <div class="page-header">
           <h2>Add Data</h2>
@@ -787,7 +777,7 @@
               <%= f.label :value, :class => 'control-label', :for => "val" %>
               <div class="controls">
                 <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
-              </div>
+              </div> 
             </div>
             <%= f.hidden_field :stat_type, :value => 4 %>
             <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -798,14 +788,14 @@
           <% end %>
         </div>
       </div>
-
+      
     </div>
-
+    
     <div class="tab-pane" id="hema">
       <div class="page-header">
         <h2>Hematocrit Stats</h2>
       </div>
-
+      
       <div class="span3">
         <div class="page-header">
           <h2>Add Data</h2>
@@ -822,7 +812,7 @@
               <%= f.label :value, :class => 'control-label', :for => "val" %>
               <div class="controls">
                 <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
-              </div>
+              </div> 
             </div>
             <%= f.hidden_field :stat_type, :value => 5 %>
             <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -833,14 +823,14 @@
           <% end %>
         </div>
       </div>
-
+      
     </div>
-
+    
     <div class="tab-pane" id="plate">
       <div class="page-header">
         <h2>Platelet Stats</h2>
       </div>
-
+      
       <div class="span3">
         <div class="page-header">
           <h2>Add Data</h2>
@@ -857,7 +847,7 @@
               <%= f.label :value, :class => 'control-label', :for => "val" %>
               <div class="controls">
                 <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
-              </div>
+              </div> 
             </div>
             <%= f.hidden_field :stat_type, :value => 6 %>
             <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -868,14 +858,14 @@
           <% end %>
         </div>
       </div>
-
+      
     </div>
 
     <div class="tab-pane" id="hr">
       <div class="page-header">
         <h2>Heart Rate Stats</h2>
       </div>
-
+      
       <div class="span3">
         <div class="page-header">
           <h2>Add Data</h2>
@@ -892,7 +882,7 @@
               <%= f.label :value, :class => 'control-label', :for => "val" %>
               <div class="controls">
                 <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
-              </div>
+              </div> 
             </div>
             <%= f.hidden_field :stat_type, :value => 7 %>
             <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -903,14 +893,14 @@
           <% end %>
         </div>
       </div>
-
+      
     </div>
-
+    
     <div class="tab-pane" id="resp">
       <div class="page-header">
         <h2>Respiration Rate Stats</h2>
       </div>
-
+      
       <div class="span3">
         <div class="page-header">
           <h2>Add Data</h2>
@@ -927,7 +917,7 @@
               <%= f.label :value, :class => 'control-label', :for => "val" %>
               <div class="controls">
                 <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
-              </div>
+              </div> 
             </div>
             <%= f.hidden_field :stat_type, :value => 8 %>
             <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -938,14 +928,14 @@
           <% end %>
         </div>
       </div>
-
+      
     </div>
-
+    
     <div class="tab-pane" id="temp">
       <div class="page-header">
         <h2>Temperature Stats</h2>
       </div>
-
+      
       <div class="span3">
         <div class="page-header">
           <h2>Add Data</h2>
@@ -962,7 +952,7 @@
               <%= f.label :value, :class => 'control-label', :for => "val" %>
               <div class="controls">
                 <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
-              </div>
+              </div> 
             </div>
             <%= f.hidden_field :stat_type, :value => 9 %>
             <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -973,14 +963,14 @@
           <% end %>
         </div>
       </div>
-
+      
     </div>
-
+    
     <div class="tab-pane" id="o2sat">
       <div class="page-header">
         <h2>O2 Saturation Stats</h2>
       </div>
-
+      
       <div class="span3">
         <div class="page-header">
           <h2>Add Data</h2>
@@ -997,7 +987,7 @@
               <%= f.label :value, :class => 'control-label', :for => "val" %>
               <div class="controls">
                 <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
-              </div>
+              </div> 
             </div>
             <%= f.hidden_field :stat_type, :value => 10 %>
             <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -1008,7 +998,7 @@
           <% end %>
         </div>
       </div>
-
+      
     </div>
 
     <div class="tab-pane" id="pain">
@@ -1032,7 +1022,7 @@
               <%= f.label :value, :class => 'control-label', :for => "val" %>
               <div class="controls">
                 <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
-              </div>
+              </div> 
             </div>
             <%= f.hidden_field :stat_type, :value => 11 %>
             <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -1043,14 +1033,14 @@
           <% end %>
         </div>
       </div>
-
+      
     </div>
 
     <div class="tab-pane" id="weight">
       <div class="page-header">
         <h2>Weight Stats</h2>
       </div>
-
+      
       <div class="span3">
         <div class="page-header">
           <h2>Add Data</h2>
@@ -1067,7 +1057,7 @@
               <%= f.label :value, :class => 'control-label', :for => "val" %>
               <div class="controls">
                 <%= f.text_field :value, :class => 'input-xlarge', :id => "val", :value => (number_with_precision(f.object.value, :precision => 2) || 0) %> (Need Measurements)
-              </div>
+              </div> 
             </div>
             <%= f.hidden_field :stat_type, :value => 12 %>
             <%= f.hidden_field :user_id, :value => current_user.id %>
@@ -1078,8 +1068,8 @@
           <% end %>
         </div>
       </div>
-
+      
     </div>
-
+    
   </div>
 </div>
