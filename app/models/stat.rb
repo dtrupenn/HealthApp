@@ -1,18 +1,18 @@
 class Stat < ActiveRecord::Base
 
   attr_accessible :stat_type, :user_id, :value
-
+  
   validates :user_id, presence: true
   validates :stat_type, presence: true
   validates :value, presence: true
-
+  
   belongs_to :user
 
-  scope :most_recent, order("created_at DESC").limit(5)
+  scope :most_recent, order("created_at DESC").limit(10)
   scope :first, order("created_at ASC").limit(1)
   scope :last, order("created_at DESC").limit(1)
-  scope :highest, order("stats.value DESC").limit(5)
-  scope :lowest, order("stats.value ASC").limit(5)
+  scope :highest, order("stats.value DESC").limit(10)
+  scope :lowest, order("stats.value ASC").limit(10)
 
 
   def bp?
