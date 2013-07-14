@@ -1,8 +1,5 @@
 source 'https://rubygems.org'
 
-# Specified for Heroku
-ruby "1.9.3" 
-
 gem 'rails', '3.2.11'
 gem 'devise' # Gem meant for authentication
 gem 'cancan' # Gem meant for user role definitions
